@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/kdenno/iReporterREST.svg?branch=endpoints)](https://travis-ci.org/kdenno/iReporterREST)
 # iReporterREST #
 
 REST API for iReporter App. 
