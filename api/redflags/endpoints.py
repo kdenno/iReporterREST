@@ -35,3 +35,17 @@ def create_flag():
 
     # return to client
     return statusresponse.success_201(returnobj['id'], 'Created flag-record')
+
+
+    # all redflags
+
+
+@redendpoint.route('/red-flags', methods=['GET'])
+def all_flags():
+    allredflags = [flag.to_json() for flag in redflags]
+    if len(allredflags) < 1:
+        return statusresponse.success_200([{}], 'empty')
+
+    # return to client
+    return statusresponse.success_200(allredflags, 'All red flags')
+
