@@ -15,12 +15,13 @@ REST API for iReporter App.
 * VSCode (IDE)
 
 ## Installation ##
-clone the project to your local machine from https://github.com/kdenno/iReporterREST.git
+Clone the project to your local machine from https://github.com/kdenno/iReporterREST.git
 
 #### Set Up the Virtual Environment ###
-In your terminal, Run pip install virtualenv to install virtualenv
-Run virtualenv env to create a virtual environment named env
-env/scripts/activate.bat to activate your virtual environment.
+In your terminal,
+* Run pip install virtualenv to install virtualenv
+* Run virtualenv env to create a virtual environment named env
+* env/scripts/activate.bat to activate your virtual environment.
 
 ## Requirements ##
 Chekout the requirements.txt file in the root folder of the project for the full list of the requirements to install.
