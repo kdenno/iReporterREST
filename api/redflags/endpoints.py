@@ -36,7 +36,6 @@ def create_flag():
     # return to client
     return statusresponse.success_201(returnobj['id'], 'Created flag-record')
 
-
     # all redflags
 
 
@@ -49,3 +48,23 @@ def all_flags():
     # return to client
     return statusresponse.success_200(allredflags, 'All red flags')
 
+
+# get specific flag
+
+
+@redendpoint.route('/red-flags/<red_flag_id>', methods=['GET'])
+def get_flag(red_flag_id):
+    if red_flag_id == '' or red_flag_id == None:
+        return statusresponse.error_400('No ID passed ')
+
+    # check if flags
+    allredflags = [flag.to_json() for flag in redflags]
+    if len(allredflags) < 1:
+        return jsonify({'status': 204, 'data': [{}]}), 204
+
+    for value in allredflags:
+        if value.get('id') == int(red_flag_id):
+            # return to client
+            return statusresponse.success_200([value], 'redflag')
+    else:
+        return statusresponse.error_400('Flag doesnot exist')
