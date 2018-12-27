@@ -35,27 +35,15 @@ class TestEndpoints(unittest.TestCase):
         response = self.app_tester.get("api/v1/red-flags/19")
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(data.get("message"), "Flag doesnot exist")
+        self.assertEqual(data.get("error"), "Flag doesnot exist")
 
     def test_delete_redflag(self):
         """delete red-flag with non existing id"""
         response = self.app_tester.delete("api/v1/red-flags/3")
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(data.get("message"), "Flag doesnot exist")
 
-        """delete red-flag with existing id"""
-        response = self.app_tester.delete("api/v1/red-flags/2")
-        data = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(data.get("message"),
-                         "red-flag record has been deleted")
-
-    # def test_create_flag_missing_params(self):
-    #     input_data = {'createdOn': '23-12-2018',
-    #                   'createdBy': 'kdenno', 'issuetype': 'red-flag', 'location': 'kamwokya', 'status': 'pending', 'images': 'images', 'videos': 'videos', 'comment': 'comment comment'}
-    #     response = self.app_tester.post('/api/v1/red-flags', json=input_data)
-    #     self.assertEqual(response.status_code, 400)
+        self.assertIn(data.get("error"), "Flag doesnot exist")
 
 
 if __name__ == '__main__':
