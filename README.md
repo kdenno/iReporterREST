@@ -3,16 +3,16 @@
 REST API for iReporter App. 
 
 ## Features ##
-*Create  red-flag.
-*Get  red-flag by id.
-*Get all red-flags.
-*Update red-flag by id
-*Delete red-flag by id.
+* Create  red-flag.
+* Get  red-flag by id.
+* Get all red-flags.
+* Update red-flag by id
+* Delete red-flag by id.
 
 ## Language and Tools Used ##
-*Python 3.7
-*Postman
-*VSCode (IDE)
+* Python 3.7
+* Postman
+* VSCode (IDE)
 
 ## Installation ##
 clone the project to your local machine from https://github.com/kdenno/iReporterREST.git
