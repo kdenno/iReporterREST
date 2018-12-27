@@ -124,6 +124,7 @@ def edit_flag_location(red_flag_id):
         return jsonify({'status': 204, 'data': [{}]}), 204
 
     postdata = request.get_json()
+
 # check for data
     if not postdata:
         return statusresponse.error_400('No location data passed ')
