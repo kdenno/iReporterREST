@@ -110,7 +110,20 @@ def edit_flag_comment(red_flag_id):
     else:
         return statusresponse.error_400('Flag doesnot exist')
 
+# edit flag location
 
+
+@redendpoint.route('/red-flags/<red_flag_id>/location', methods=['PATCH'])
+def edit_flag_location(red_flag_id):
+    if red_flag_id == '' or red_flag_id == None:
+        return statusresponse.error_400('No ID passed ')
+
+    # check if flags
+    allredflags = [flag.to_json() for flag in redflags]
+    if len(allredflags) < 1:
+        return jsonify({'status': 204, 'data': [{}]}), 204
+
+    postdata = request.get_json()
 # check for data
     if not postdata:
         return statusresponse.error_400('No location data passed ')
