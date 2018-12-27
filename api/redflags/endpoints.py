@@ -149,3 +149,23 @@ def edit_flag_location(red_flag_id):
             return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s location')
     else:
         return statusresponse.error_400('Flag doesnot exist')
+
+# remove flag
+
+
+@redendpoint.route('/red-flags/<red_flag_id>', methods=['DELETE'])
+def remove_flag(red_flag_id):
+    if red_flag_id == '' or red_flag_id == None:
+        return statusresponse.error_400('No ID passed ')
+
+    allredflags = [flag.to_json() for flag in redflags]
+    for key, value in enumerate(allredflags):
+        if value.get('id') == int(red_flag_id):
+            # remove flag
+            redflags.pop(key)
+
+            # return to client
+            return statusresponse.success_201([{'id': red_flag_id}], 'red-flag record has been deleted')
+    else:
+        return statusresponse.error_400('Flag doesnot exist')
+
