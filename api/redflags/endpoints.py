@@ -70,11 +70,11 @@ def get_flag(red_flag_id):
         return statusresponse.error_400('Flag doesnot exist')
 
 
-# edit flag location
+# edit flag comment
 
 
-@redendpoint.route('/red-flags/<red_flag_id>/location', methods=['PATCH'])
-def edit_flag_location(red_flag_id):
+@redendpoint.route('/red-flags/<red_flag_id>/comment', methods=['PATCH'])
+def edit_flag_comment(red_flag_id):
     if red_flag_id == '' or red_flag_id == None:
         return statusresponse.error_400('No ID passed ')
 
@@ -87,17 +87,17 @@ def edit_flag_location(red_flag_id):
 
     # check for data
     if not postdata:
-        return statusresponse.error_400('No location data passed ')
+        return statusresponse.error_400('No comment passed ')
 
     # check its standard
-    required_fields = ['location']
+    required_fields = ['comment']
     if not all(field in postdata for field in required_fields):
         return statusresponse.error_400('Required parameter(s) missing ')
 
     for key, value in enumerate(allredflags):
         if value.get('id') == int(red_flag_id):
             # edit object data
-            value['location'] = postdata['location']
+            value['comment'] = postdata['comment']
 
             # reconvert back to incident object
             reconverted = Incident(value)
@@ -106,6 +106,6 @@ def edit_flag_location(red_flag_id):
             redflags[key] = reconverted
 
             # return to client
-            return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s location')
+            return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s commment')
     else:
         return statusresponse.error_400('Flag doesnot exist')
