@@ -109,3 +109,29 @@ def edit_flag_comment(red_flag_id):
             return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s commment')
     else:
         return statusresponse.error_400('Flag doesnot exist')
+
+
+# check for data
+    if not postdata:
+        return statusresponse.error_400('No location data passed ')
+
+    # check its standard
+    required_fields = ['location']
+    if not all(field in postdata for field in required_fields):
+        return statusresponse.error_400('Required parameter(s) missing ')
+
+    for key, value in enumerate(allredflags):
+        if value.get('id') == int(red_flag_id):
+            # edit object data
+            value['location'] = postdata['location']
+
+            # reconvert back to incident object
+            reconverted = Incident(value)
+
+            # replace flag
+            redflags[key] = reconverted
+
+            # return to client
+            return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s location')
+    else:
+        return statusresponse.error_400('Flag doesnot exist')
