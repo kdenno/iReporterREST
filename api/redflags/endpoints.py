@@ -6,7 +6,7 @@ import api.redflags.statusresponse as statusresponse
 from api.redflags.stoerer import store_func
 
 
-# init blue print with current module name
+# init blue print with module name
 redendpoint = Blueprint('redflags', __name__)
 
 redflags = store_func()
