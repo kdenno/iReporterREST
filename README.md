@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/kdenno/iReporterREST.svg?branch=endpoints)](https://travis-ci.org/kdenno/iReporterREST)
+[![Coverage Status](https://coveralls.io/repos/github/kdenno/iReporterREST/badge.svg?branch=master)](https://coveralls.io/github/kdenno/iReporterREST?branch=master)
 # iReporterREST #
 
 REST API for iReporter App. 
