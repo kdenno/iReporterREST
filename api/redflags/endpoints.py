@@ -168,4 +168,3 @@ def remove_flag(red_flag_id):
             return statusresponse.success_201([{'id': red_flag_id}], 'red-flag record has been deleted')
     else:
         return statusresponse.error_400('Flag doesnot exist')
-
