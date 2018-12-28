@@ -17,8 +17,9 @@ redflags = store_func()
 @redendpoint.route('/red-flags', methods=['POST'])
 def create_flag():
 
-    postdata = request.get_json() 
-    required_fields = ['createdBy', 'issuetype','location', 'status', 'images', 'videos', 'comment']    
+    postdata = request.get_json()
+    required_fields = ['createdBy', 'issuetype',
+                       'location', 'status', 'images', 'videos', 'comment']
     if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
@@ -34,8 +35,8 @@ def create_flag():
 
 
 @redendpoint.route('/red-flags', methods=['GET'])
-def all_flags():    
-    if statusresponse.flag_count(redflags):    
+def all_flags():
+    if statusresponse.flag_count(redflags):
         return statusresponse.success_200([{}], 'empty')
 
     allredflags = statusresponse.get_flags(redflags)
@@ -47,9 +48,9 @@ def all_flags():
 
 
 @redendpoint.route('/red-flags/<red_flag_id>', methods=['GET'])
-def get_flag(red_flag_id):   
+def get_flag(red_flag_id):
 
-    allredflags = statusresponse.get_flags(redflags)    
+    allredflags = statusresponse.get_flags(redflags)
 
     for value in allredflags:
         if value.get('id') == int(red_flag_id):
@@ -64,9 +65,9 @@ def get_flag(red_flag_id):
 
 @redendpoint.route('/red-flags/<red_flag_id>/comment', methods=['PATCH'])
 def edit_flag_comment(red_flag_id):
-    
+
     # check if flags
-    allredflags = statusresponse.get_flags(redflags)    
+    allredflags = statusresponse.get_flags(redflags)
     postdata = request.get_json()
 
     # check its standard
@@ -95,8 +96,8 @@ def edit_flag_comment(red_flag_id):
 
 @redendpoint.route('/red-flags/<red_flag_id>/location', methods=['PATCH'])
 def edit_location(red_flag_id):
-     
-    allflags = statusresponse.get_flags(redflags)    
+
+    allflags = statusresponse.get_flags(redflags)
     postdata = request.get_json()
 
     # check its standard
@@ -126,9 +127,9 @@ def edit_location(red_flag_id):
 
 @redendpoint.route('/red-flags/<red_flag_id>', methods=['DELETE'])
 def remove_flag(red_flag_id):
-    
-    allredflags = statusresponse.get_flags(redflags)    
-    
+
+    allredflags = statusresponse.get_flags(redflags)
+
     for key, value in enumerate(allredflags):
         if value.get('id') == int(red_flag_id):
             # remove flag
