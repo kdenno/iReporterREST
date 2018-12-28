@@ -17,16 +17,10 @@ redflags = store_func()
 @redendpoint.route('/red-flags', methods=['POST'])
 def create_flag():
 
-    postdata = request.get_json()
-    # check for data
-    if not postdata:
-        return statusresponse.error_400('No data posted')
-
-    # check its standard
-    required_fields = ['createdBy', 'issuetype',
-                       'location', 'status', 'images', 'videos', 'comment']
-    if not all(field in postdata for field in required_fields):
-        return statusresponse.error_400('Required paremeter(s) missing')
+    postdata = request.get_json() 
+    required_fields = ['createdBy', 'issuetype','location', 'status', 'images', 'videos', 'comment']    
+    if not statusresponse.check_fields(required_fields, postdata):
+        return statusresponse.error_400('Required parameter(s) missing ')
 
     # append to redflags
     redflag = Incident(postdata)
@@ -40,11 +34,11 @@ def create_flag():
 
 
 @redendpoint.route('/red-flags', methods=['GET'])
-def all_flags():
-    allredflags = [flag.to_json() for flag in redflags]
-    if len(allredflags) < 1:
+def all_flags():    
+    if statusresponse.flag_count(redflags):    
         return statusresponse.success_200([{}], 'empty')
 
+    allredflags = statusresponse.get_flags(redflags)
     # return to client
     return statusresponse.success_200(allredflags, 'All red flags')
 
@@ -53,14 +47,9 @@ def all_flags():
 
 
 @redendpoint.route('/red-flags/<red_flag_id>', methods=['GET'])
-def get_flag(red_flag_id):
-    if red_flag_id == '' or red_flag_id == None:
-        return statusresponse.error_400('No ID passed ')
+def get_flag(red_flag_id):   
 
-    # check if flags
-    allredflags = [flag.to_json() for flag in redflags]
-    if len(allredflags) < 1:
-        return jsonify({'status': 204, 'data': [{}]}), 204
+    allredflags = statusresponse.get_flags(redflags)    
 
     for value in allredflags:
         if value.get('id') == int(red_flag_id):
@@ -75,23 +64,14 @@ def get_flag(red_flag_id):
 
 @redendpoint.route('/red-flags/<red_flag_id>/comment', methods=['PATCH'])
 def edit_flag_comment(red_flag_id):
-    if red_flag_id == '' or red_flag_id == None:
-        return statusresponse.error_400('No ID passed ')
-
+    
     # check if flags
-    allredflags = [flag.to_json() for flag in redflags]
-    if len(allredflags) < 1:
-        return jsonify({'status': 204, 'data': [{}]}), 204
-
+    allredflags = statusresponse.get_flags(redflags)    
     postdata = request.get_json()
-
-    # check for data
-    if not postdata:
-        return statusresponse.error_400('No comment passed ')
 
     # check its standard
     required_fields = ['comment']
-    if not all(field in postdata for field in required_fields):
+    if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
     for key, value in enumerate(allredflags):
@@ -115,23 +95,13 @@ def edit_flag_comment(red_flag_id):
 
 @redendpoint.route('/red-flags/<red_flag_id>/location', methods=['PATCH'])
 def edit_flag_location(red_flag_id):
-    if red_flag_id == '' or red_flag_id == None:
-        return statusresponse.error_400('No ID passed ')
-
-    # check if flags
-    allredflags = [flag.to_json() for flag in redflags]
-    if len(allredflags) < 1:
-        return jsonify({'status': 204, 'data': [{}]}), 204
-
+     # check if flags
+    allredflags = statusresponse.get_flags(redflags)    
     postdata = request.get_json()
-
-# check for data
-    if not postdata:
-        return statusresponse.error_400('No location data passed ')
 
     # check its standard
     required_fields = ['location']
-    if not all(field in postdata for field in required_fields):
+    if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
     for key, value in enumerate(allredflags):
@@ -150,15 +120,15 @@ def edit_flag_location(red_flag_id):
     else:
         return statusresponse.error_400('Flag doesnot exist')
 
+
 # remove flag
 
 
 @redendpoint.route('/red-flags/<red_flag_id>', methods=['DELETE'])
 def remove_flag(red_flag_id):
-    if red_flag_id == '' or red_flag_id == None:
-        return statusresponse.error_400('No ID passed ')
-
-    allredflags = [flag.to_json() for flag in redflags]
+    
+    allredflags = statusresponse.get_flags(redflags)    
+    
     for key, value in enumerate(allredflags):
         if value.get('id') == int(red_flag_id):
             # remove flag

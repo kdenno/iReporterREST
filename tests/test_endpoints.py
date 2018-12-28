@@ -10,13 +10,13 @@ class TestEndpoints(unittest.TestCase):
     def test_create_flags(self):
         input_data = {
 
-            "createdBy": "Jon Mark",
+            "createdBy": "K Denno",
             "issuetype": "red-flag",
             "location": "Kawempe",
             "status": "Pending",
             "videos": "Video url",
             "images": "images urls",
-            "comment": "He was caught red handed"}
+            "comment": "Caught taking bribe"}
 
         response = self.app_tester.post('/api/v1/red-flags', json=input_data)
         self.assertEqual(response.status_code, 201)
@@ -24,7 +24,7 @@ class TestEndpoints(unittest.TestCase):
     def test_all_flags(self):
 
         response = self.app_tester.get('/api/v1/red-flags')
-        #data = json.loads(response.data.decode())
+        data = json.loads(response.data.decode())        
         self.assertEqual(response.status_code, 200)
         #self.assertEqual(len(data['data']), 2)
         #self.assertEqual(data['data'][0]['location'], 'kamwokya')
