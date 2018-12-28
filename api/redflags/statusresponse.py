@@ -38,3 +38,5 @@ def get_flags(redflags):
 def check_for_ID(red_flag_id):
     if red_flag_id == '' or red_flag_id == None:
         return False
+
+

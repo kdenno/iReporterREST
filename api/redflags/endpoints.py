@@ -67,7 +67,7 @@ def get_flag(red_flag_id):
 def edit_flag_comment(red_flag_id):
 
     # check if flags
-    allredflags = statusresponse.get_flags(redflags)
+    allflags = statusresponse.get_flags(redflags)
     postdata = request.get_json()
 
     # check its standard
@@ -75,16 +75,16 @@ def edit_flag_comment(red_flag_id):
     if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
-    for key, value in enumerate(allredflags):
-        if value.get('id') == int(red_flag_id):
+    for index, flagdict in enumerate(allflags):
+        if flagdict.get('id') == int(red_flag_id):
             # edit object data
-            value['comment'] = postdata['comment']
+            flagdict['comment'] = postdata['comment']
 
             # reconvert back to incident object
-            reconverted = Incident(value)
+            incidentobj = Incident(flagdict)
 
             # replace flag
-            redflags[key] = reconverted
+            redflags[index] = incidentobj
 
             # return to client
             return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s commment')
