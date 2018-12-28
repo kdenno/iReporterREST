@@ -94,9 +94,9 @@ def edit_flag_comment(red_flag_id):
 
 
 @redendpoint.route('/red-flags/<red_flag_id>/location', methods=['PATCH'])
-def edit_flag_location(red_flag_id):
-     # check if flags
-    allredflags = statusresponse.get_flags(redflags)    
+def edit_location(red_flag_id):
+     
+    allflags = statusresponse.get_flags(redflags)    
     postdata = request.get_json()
 
     # check its standard
@@ -104,7 +104,7 @@ def edit_flag_location(red_flag_id):
     if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
-    for key, value in enumerate(allredflags):
+    for key, value in enumerate(allflags):
         if value.get('id') == int(red_flag_id):
             # edit object data
             value['location'] = postdata['location']
