@@ -1,4 +1,6 @@
 from flask import jsonify
+from api.redflags.models import Incident
+
 
 def error_400(message):
     response = {
@@ -38,5 +40,20 @@ def get_flags(redflags):
 def check_for_ID(red_flag_id):
     if red_flag_id == '' or red_flag_id == None:
         return False
+
+def update_flag(postdata, red_flag_id, allflags):
+    for index, flagdict in enumerate(allflags):
+        if flagdict.get('id') == int(red_flag_id):
+            # edit object data
+            flagdict['comment'] = postdata['comment']
+
+            # reconvert back to incident object
+            incidentobj = Incident(flagdict)
+
+            return {'status': 'updated', 'incidentobj': incidentobj, 'index': index}
+            
+    else:
+        return {'status': 'failed'}
+        
 
 

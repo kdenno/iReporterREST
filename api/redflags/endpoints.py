@@ -75,21 +75,13 @@ def edit_flag_comment(red_flag_id):
     if not statusresponse.check_fields(required_fields, postdata):
         return statusresponse.error_400('Required parameter(s) missing ')
 
-    for index, flagdict in enumerate(allflags):
-        if flagdict.get('id') == int(red_flag_id):
-            # edit object data
-            flagdict['comment'] = postdata['comment']
-
-            # reconvert back to incident object
-            incidentobj = Incident(flagdict)
-
-            # replace flag
-            redflags[index] = incidentobj
-
-            # return to client
-            return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s commment')
+    update_status = statusresponse.update_flag(postdata, red_flag_id, allflags)
+    if update_status.get('status') == 'updated':
+        redflags[update_status.get('index')] = update_status.get('incidentobj')
+        return statusresponse.success_201(red_flag_id, 'Updated red-flag record’s commment')
     else:
         return statusresponse.error_400('Flag doesnot exist')
+
 
 # edit flag location
 
