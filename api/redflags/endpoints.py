@@ -31,6 +31,7 @@ def create_flag():
     # return to client
     return statusresponse.success_201(returnobj['id'], 'Created flag-record')
 
+
     # all redflags
 
 
