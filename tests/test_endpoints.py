@@ -21,14 +21,13 @@ class TestEndpoints(unittest.TestCase):
         response = self.app_tester.post('/api/v1/red-flags', json=input_data)
         self.assertEqual(response.status_code, 201)
 
+    
     def test_all_flags(self):
 
         response = self.app_tester.get('/api/v1/red-flags')
         data = json.loads(response.data.decode())        
         self.assertEqual(response.status_code, 200)
-        #self.assertEqual(len(data['data']), 2)
-        #self.assertEqual(data['data'][0]['location'], 'kamwokya')
-        #self.assertEqual(data['data'][0]['id'], '1')
+        
 
     def test_get_specific_flag(self):
         """Test get redflag with with non existing id"""
@@ -36,6 +35,41 @@ class TestEndpoints(unittest.TestCase):
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data.get("error"), "Flag doesnot exist")
+
+
+    def test_edit_flag_comment(self):
+        """Test edit redflag comment with with non existing id"""
+        input_data = {
+
+            "createdBy": "K Denno",
+            "issuetype": "red-flag",
+            "location": "Kawempe",
+            "status": "Pending",
+            "videos": "Video url",
+            "images": "images urls",
+            "comment": "Caught taking bribe"}
+        response = self.app_tester.patch("api/v1/red-flags/19/comment", json=input_data)
+        data = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)             
+        self.assertEqual(data["error"], "Flag doesnot exist")
+
+
+    def test_edit_flag_location(self):
+        """Test edit redflag comment with with non existing id"""
+        input_data = {
+
+            "createdBy": "K Denno",
+            "issuetype": "red-flag",
+            "location": "Kawempe",
+            "status": "Pending",
+            "videos": "Video url",
+            "images": "images urls",
+            "comment": "Caught taking bribe"}
+        response = self.app_tester.patch("api/v1/red-flags/19/location", json=input_data)
+        data = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)             
+        self.assertEqual(data["error"], "Flag doesnot exist")
+
 
     def test_delete_redflag(self):
         """delete red-flag with non existing id"""
