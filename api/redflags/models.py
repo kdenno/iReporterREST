@@ -8,7 +8,10 @@ class Incident():
             self.id = postdata.get('id')
         else:
             self.id = random.randrange(1, 100)
-        self.createdOn = datetime.datetime.now()
+        if postdata.get('createdOn'):
+            self.createdOn = postdata.get('createdOn')
+        else:
+            self.createdOn = datetime.datetime.now()
         self.createdBy = postdata.get("createdBy")
         self.issuetype = postdata.get("issuetype")
         self.location = postdata.get("location")
