@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/kdenno/iReporterREST.svg?branch=endpoints)](https://travis-ci.org/kdenno/iReporterREST)
 [![Coverage Status](https://coveralls.io/repos/github/kdenno/iReporterREST/badge.svg?branch=endpoints)](https://coveralls.io/github/kdenno/iReporterREST?branch=endpoints)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7819728baacca25063eb/maintainability)](https://codeclimate.com/github/kdenno/iReporterREST/maintainability)
 
 # iReporterREST #
 
